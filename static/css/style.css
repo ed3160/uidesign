@@ -1,0 +1,14 @@
+:root { --brand:#4285F4; --navy:#274982; --soft:#C9DDFF; --mid:#7797CD; }
+body { font-family:'Inter',system-ui,sans-serif; background:#fff; color:#000; }
+.blue-card { background:var(--brand); color:#fff; box-shadow:0 4px 4px rgba(0,0,0,0.25); }
+.blue-card h2, .blue-card p { color:#fff; }
+.bip-wrap { filter:drop-shadow(0 10px 24px rgba(31,45,92,0.18)); display:inline-block; }
+.bip-wrap svg { display:block; overflow:visible; width:100%; height:100%; }
+.dots { display:flex; gap:9px; align-items:center; }
+.dot { width:12px; height:12px; border-radius:999px; background:#1e1e1e; opacity:0.85; transition:width 280ms ease, background 200ms ease; }
+.dot.on { width:32px; background:var(--brand); opacity:1; }
+.chev { font-size:28px; color:#323232; }
+.btn-primary { background:var(--brand); border-color:var(--brand); }
+.btn-primary:hover { background:#2f6ad2; border-color:#2f6ad2; }
+.choice-btn.btn-primary { background:#fff; color:var(--brand); border-color:#fff; }
+.choice-btn { border-radius:15px; }

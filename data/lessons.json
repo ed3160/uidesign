@@ -1,0 +1,47 @@
+[
+  {
+    "title": "You've already used AI today.",
+    "body": "Every time you Google something, get a Netflix recommendation, or ask ChatGPT a question, AI is running behind the scenes. But most people have no idea what it's actually doing. So... what IS it doing?",
+    "pose": "wave",
+    "expr": "happy",
+    "acc": "question",
+    "prompt": "How often do you use AI tools in a typical day?",
+    "choices": ["Never", "A few times a week", "Daily", "Constantly"]
+  },
+  {
+    "title": "What is a Language Model?",
+    "body": "AI isn't thinking. It's predicting. When you type a message, it doesn't 'understand' you the way a human would. It's doing one thing: predicting what word should come next, over and over again.\n\nYou type: 'The weather today is...'\nAI predicts: 'sunny' / 'cold' / 'unpredictable'",
+    "pose": "think",
+    "expr": "thinking",
+    "acc": "phone",
+    "prompt": "If you typed 'Peanut butter and ___', what word do you think AI would predict?",
+    "choices": ["Jelly", "Bananas", "Honey", "Bread"]
+  },
+  {
+    "title": "Training Data",
+    "body": "How does AI know anything? Before you ever talked to it, the AI read. A lot. Billions of web pages, books, articles, Wikipedia, Reddit, news sites - essentially a huge chunk of the internet.\n\nThink of it like a kid who grew up reading every book in every library in the world.",
+    "pose": "wave",
+    "expr": "happy",
+    "acc": "book",
+    "prompt": "Which source do you think teaches AI the most?",
+    "choices": ["Books", "Wikipedia", "Social media", "All of the above"]
+  },
+  {
+    "title": "Tokens & Patterns",
+    "body": "AI doesn't read words. It reads chunks. It breaks text into pieces called 'tokens' - roughly parts of words - and learned patterns between billions of them. That's how it knows 'peanut butter and ___' is almost always 'jelly.'",
+    "pose": "wave2",
+    "expr": "wow",
+    "acc": null,
+    "prompt": "Why chop words into smaller pieces?",
+    "choices": ["To save memory", "To handle new words", "To share patterns between related words", "All of these"]
+  },
+  {
+    "title": "Estimation",
+    "body": "AI doesn't know things. It estimates them. When you ask a question, it doesn't look up an answer - it generates the most statistically likely response. That's why it can sound confident while being completely wrong.",
+    "pose": "stand",
+    "expr": "confused",
+    "acc": null,
+    "prompt": "When AI sounds very confident, what should you do?",
+    "choices": ["Trust it fully", "Double-check important facts", "Assume it's wrong", "Ask it again"]
+  }
+]
