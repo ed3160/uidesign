@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="text-center py-4">
+  <svg width="140" height="140" viewBox="0 0 169 169">
+    <circle cx="84.5" cy="84.5" r="78" fill="none" stroke="#4285F4" stroke-width="6"/>
+    <path d="M 50 85 L 76 112 L 122 62" fill="none" stroke="#4285F4" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  <h1 class="fw-bold mt-3">Quiz Complete</h1>
+  <p class="lead">You scored <strong>{{ score }} / {{ total }}</strong></p>
+</div>
+
+<div class="accordion" id="ansList">
+  {% for a in answers %}
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#ans{{ loop.index }}">
+        <span class="badge me-2 {% if a.correct %}bg-success{% else %}bg-danger{% endif %}">
+          {% if a.correct %}Correct{% else %}Missed{% endif %}
+        </span>
+        Q{{ a.q }}: {{ questions[loop.index0] }}
+      </button>
+    </h2>
+    <div id="ans{{ loop.index }}" class="accordion-collapse collapse" data-bs-parent="#ansList">
+      <div class="accordion-body">
+        <p class="text-muted small mb-1">Your answer:</p>
+        <p class="mb-3">{{ a.answer }}</p>
+        <p class="text-muted small mb-1">Ideal answer:</p>
+        <p class="mb-0">{{ ideals[loop.index0] }}</p>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<div class="text-center mt-4">
+  <a href="{{ url_for('home') }}" class="btn btn-primary btn-lg">Start over</a>
+</div>
+{% endblock %}

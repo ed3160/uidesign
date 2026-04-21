@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block content %}
+<div style="height:100vh;overflow:hidden;display:flex;flex-direction:column;justify-content:center">
+<nav class="d-flex align-items-center mb-4">
+  <a href="{{ url_for('home') }}" class="text-decoration-none d-flex align-items-center">
+    <span class="me-2" style="width:36px;height:36px"></span>
+  </a>
+  <span class="ms-auto text-muted">Lesson {{ n }} of {{ total }}</span>
+</nav>
+
+<div class="row align-items-center g-3 justify-content-center">
+  <div class="col-auto">
+    {% if prev_n %}
+      <a href="{{ url_for('learn', n=prev_n) }}" class="btn btn-link"><span class="chev">&#10094;</span></a>
+    {% else %}
+      <span class="btn btn-link disabled"><span class="chev">&#10094;</span></span>
+    {% endif %}
+  </div>
+  <div class="col position-relative">
+    <div class="blue-card p-5 rounded">
+      <h2 class="fw-bold mb-3">{{ lesson.title }}</h2>
+      <p class="fs-5" style="white-space:pre-line">{{ lesson.body }}</p>
+
+      <div class="mt-4">
+        <p class="fw-semibold mb-2">{{ lesson.prompt }}</p>
+        <div id="choices" class="d-flex flex-wrap gap-2">
+          {% for c in lesson.choices %}
+            <button class="btn btn-light choice-btn" data-choice="{{ c }}">{{ c }}</button>
+          {% endfor %}
+        </div>
+        <div id="choice-ack" class="mt-2 small fst-italic" style="min-height:1.5em"></div>
+      </div>
+    </div>
+    <div class="position-absolute" style="right:-20px;bottom:-60px;width:190px;height:265px"></div>
+  </div>
+  {% if next_n %}
+  <div class="col-auto">
+    <a href="{{ url_for('learn', n=next_n) }}" class="btn btn-link"><span class="chev">&#10095;</span></a>
+  </div>
+  {% endif %}
+</div>
+
+<div class="dots justify-content-center mt-4">
+  {% for i in range(1, total+1) %}
+    <div class="dot{% if i==n %} on{% endif %}"></div>
+  {% endfor %}
+</div>
+
+{% if is_last %}
+<div class="text-center mt-4">
+  <a href="{{ url_for('quiz', n=1) }}" class="btn btn-primary btn-lg">Start Quiz &rarr;</a>
+</div>
+{% endif %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  const LESSON = {{ lesson|tojson }};
+  const LESSON_N = {{ n }};
+  $(function(){
+    $('.choice-btn').on('click', function(){
+      const c = $(this).data('choice');
+      $('.choice-btn').removeClass('btn-primary text-white').addClass('btn-light');
+      $(this).removeClass('btn-light').addClass('btn-primary text-white');
+      $('#choice-ack').text('Saved: ' + c);
+      $.ajax({
+        url: '/learn/' + LESSON_N + '/choice',
+        method: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({choice: c})
+      });
+    });
+  });
+</script>
+{% endblock %}

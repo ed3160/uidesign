@@ -1,0 +1,17 @@
+[
+  {
+    "q": "Why does an LLM output a probability distribution over the next word, rather than a single definitive answer?",
+    "keywords": ["probab", "likely", "predict", "distribut", "guess", "uncertain"],
+    "ideal": "Language is ambiguous - there are many plausible next words. A distribution lets the model weigh multiple likely options, then sample with some randomness (temperature)."
+  },
+  {
+    "q": "What does 'tokenization' mean, and why doesn't the model just read whole words?",
+    "keywords": ["token", "chunk", "piece", "subword", "split", "sub-word"],
+    "ideal": "Tokens are sub-word chunks. Models share pieces across related words, handle novel words, and keep the vocabulary small enough to learn patterns efficiently."
+  },
+  {
+    "q": "If temperature is 0, what happens? If temperature is very high?",
+    "keywords": ["likely", "deterministic", "creative", "random", "surprising", "same", "flat"],
+    "ideal": "Temperature 0 means the model always picks the top option (deterministic, repetitive). Very high means the distribution flattens, so even unlikely words get picked - more creative, more chaotic."
+  }
+]
