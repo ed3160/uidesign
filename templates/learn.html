@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-<div style="height:100vh;overflow:hidden;display:flex;flex-direction:column;justify-content:center">
+<div style="height:100vh;display:flex;flex-direction:column;justify-content:center">
 <nav class="d-flex align-items-center mb-4">
   <a href="{{ url_for('home') }}" class="text-decoration-none d-flex align-items-center">
     <span class="me-2" style="width:36px;height:36px"></span>
@@ -9,14 +9,12 @@
 </nav>
 
 <div class="row align-items-center g-3 justify-content-center">
+  {% if prev_n %}
   <div class="col-auto">
-    {% if prev_n %}
-      <a href="{{ url_for('learn', n=prev_n) }}" class="btn btn-link"><span class="chev">&#10094;</span></a>
-    {% else %}
-      <span class="btn btn-link disabled"><span class="chev">&#10094;</span></span>
-    {% endif %}
+    <a href="{{ url_for('learn', n=prev_n) }}" class="btn btn-link"><span class="chev">&#10094;</span></a>
   </div>
-  <div class="col position-relative">
+  {% endif %}
+  <div class="col">
     <div class="blue-card p-5 rounded">
       <h2 class="fw-bold mb-3">{{ lesson.title }}</h2>
       <p class="fs-5" style="white-space:pre-line">{{ lesson.body }}</p>
@@ -31,7 +29,6 @@
         <div id="choice-ack" class="mt-2 small fst-italic" style="min-height:1.5em"></div>
       </div>
     </div>
-    <div class="position-absolute" style="right:-20px;bottom:-60px;width:190px;height:265px"></div>
   </div>
   {% if next_n %}
   <div class="col-auto">

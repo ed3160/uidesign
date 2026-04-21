@@ -1,11 +1,23 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="text-center py-5">
-  <div class="mx-auto mb-4" style="width:200px;height:200px"></div>
-  <h1 class="display-4 fw-bold mb-3">Peek inside an AI's brain</h1>
-  <p class="lead mb-4">Spoiler: It's guessing. Really good guessing.</p>
-  <form method="POST" action="{{ url_for('start') }}">
-    <button type="submit" class="btn btn-primary btn-lg px-5">Let's Go</button>
-  </form>
+<div style="height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center">
+  <div class="text-center">
+    <img id="bip-img" src="{{ url_for('static', filename='group9.png') }}" alt="" style="width:200px;height:200px;object-fit:contain" class="mb-4">
+    <h1 class="display-4 fw-bold mb-3">Peek inside an AI's brain</h1>
+    <p class="lead mb-4">Spoiler: It's guessing. Really good guessing.</p>
+    <form method="POST" action="{{ url_for('start') }}">
+      <button id="start-btn" type="submit" class="btn btn-lg px-5" style="background:#fff;color:var(--brand);border:2px solid var(--brand);transition:background 0.2s,color 0.2s">Let's Go</button>
+    </form>
+  </div>
 </div>
+{% endblock %}
+{% block scripts %}
+<script>
+  const btn = document.getElementById('start-btn');
+  const img = document.getElementById('bip-img');
+  const happy = "{{ url_for('static', filename='group10.png') }}";
+  const neutral = "{{ url_for('static', filename='group9.png') }}";
+  btn.addEventListener('mouseenter', () => { img.src = happy; btn.style.background='var(--brand)'; btn.style.color='#fff'; });
+  btn.addEventListener('mouseleave', () => { img.src = neutral; btn.style.background='#fff'; btn.style.color='var(--brand)'; });
+</script>
 {% endblock %}
