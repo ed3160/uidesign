@@ -2,9 +2,6 @@
 {% block content %}
 <div style="height:100vh;display:flex;flex-direction:column;justify-content:center">
 <nav class="d-flex align-items-center mb-4">
-  <a href="{{ url_for('home') }}" class="text-decoration-none d-flex align-items-center">
-    <span class="me-2" style="width:36px;height:36px"></span>
-  </a>
   <span class="ms-auto text-muted">Lesson {{ n }} of {{ total }}</span>
 </nav>
 
@@ -26,7 +23,7 @@
             <button class="btn btn-light choice-btn" data-choice="{{ c }}">{{ c }}</button>
           {% endfor %}
         </div>
-        <div id="choice-ack" class="mt-2 small fst-italic" style="min-height:1.5em"></div>
+        <div id="choice-ack" class="mt-3 fw-semibold" style="min-height:1.5em"></div>
       </div>
     </div>
   </div>
@@ -60,7 +57,9 @@
       const c = $(this).data('choice');
       $('.choice-btn').removeClass('btn-primary text-white').addClass('btn-light');
       $(this).removeClass('btn-light').addClass('btn-primary text-white');
-      $('#choice-ack').text('Saved: ' + c);
+      const isLast = {{ 'true' if is_last else 'false' }};
+      const msg = isLast ? 'Got it! Ready for the quiz?' : 'Got it! Keep going →';
+      $('#choice-ack').text(msg);
       $.ajax({
         url: '/learn/' + LESSON_N + '/choice',
         method: 'POST',

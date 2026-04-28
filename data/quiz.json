@@ -10,8 +10,8 @@
     "ideal": "Tokens are sub-word chunks. Models share pieces across related words, handle novel words, and keep the vocabulary small enough to learn patterns efficiently."
   },
   {
-    "q": "If temperature is 0, what happens? If temperature is very high?",
-    "keywords": ["likely", "deterministic", "creative", "random", "surprising", "same", "flat"],
-    "ideal": "Temperature 0 means the model always picks the top option (deterministic, repetitive). Very high means the distribution flattens, so even unlikely words get picked - more creative, more chaotic."
+    "q": "AI can sound completely confident while being totally wrong. Why does this happen, and what should you do about it?",
+    "keywords": ["predict", "guess", "estimate", "statistic", "verify", "check", "fact", "wrong", "likely"],
+    "ideal": "AI generates the most statistically likely response, not the factually correct one. It doesn't look up answers — it estimates them based on patterns in training data. Even when it sounds certain, you should verify important facts from a reliable source."
   }
 ]

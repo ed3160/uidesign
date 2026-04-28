@@ -4,7 +4,8 @@
   <div class="text-center">
     <img id="bip-img" src="{{ url_for('static', filename='group9.png') }}" alt="" style="width:200px;height:200px;object-fit:contain" class="mb-4">
     <h1 class="display-4 fw-bold mb-3">Peek inside an AI's brain</h1>
-    <p class="lead mb-4">Spoiler: It's guessing. Really good guessing.</p>
+    <p class="lead mb-2">Spoiler: It's guessing. Really good guessing.</p>
+    <p class="text-muted small mb-4">5 lessons &middot; 3-question quiz &middot; ~5 min</p>
     <form method="POST" action="{{ url_for('start') }}">
       <button id="start-btn" type="submit" class="btn btn-lg px-5" style="background:#fff;color:var(--brand);border:2px solid var(--brand);transition:background 0.2s,color 0.2s">Let's Go</button>
     </form>

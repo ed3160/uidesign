@@ -1,9 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
 <nav class="d-flex align-items-center mb-4">
-  <a href="{{ url_for('home') }}" class="text-decoration-none d-flex align-items-center">
-    <span class="me-2" style="width:36px;height:36px"></span>
-  </a>
   <span class="ms-auto text-muted">Question {{ n }} of {{ total }}</span>
 </nav>
 
@@ -17,7 +14,8 @@
   <div class="card-body p-4">
     <h3 class="fw-semibold mb-3">{{ question.q }}</h3>
     <form method="POST" action="{{ url_for('quiz', n=n) }}">
-      <textarea name="answer" class="form-control mb-3" rows="6" placeholder="Your answer..." required></textarea>
+      <textarea name="answer" class="form-control mb-1" rows="5" placeholder="Your answer..." required></textarea>
+      <small class="text-muted d-block mb-3">A sentence or two is plenty — use what you learned in the lessons.</small>
       <div class="d-flex justify-content-between">
         <a href="{{ url_for('home') }}" class="btn btn-outline-secondary">Cancel</a>
         <button type="submit" class="btn btn-primary">
