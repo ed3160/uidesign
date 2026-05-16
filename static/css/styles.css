@@ -1,0 +1,1093 @@
+/* ============================================================ */
+/* === DESIGN TOKENS ==========================================  */
+/* ------------------------------------------------------------  */
+/* One color scale, four type sizes, one bold weight.            */
+/* Add nothing here unless you can name a screen that needs it.  */
+/* ============================================================ */
+:root {
+  --ease: cubic-bezier(0.23, 1, 0.32, 1);
+
+  /* Surfaces */
+  --bg:        #f0f0f0;   /* light-grey page background on every screen */
+  --surface:   #ffffff;   /* white cards / interactive containers */
+  --surface-2: #f7f7f7;   /* subtle inset surfaces (chip backgrounds) */
+
+  /* Text */
+  --ink:       #1a1a1a;   /* near-black — headings + body */
+  --ink-soft:  #9e9e9e;   /* mid grey — captions, placeholders, secondary */
+  --rule:      #e6e6e6;
+  --rule-2:    #cfcfcf;
+
+  /* Brand — single accent: primary blue + dark blue for pressed/hover. */
+  --blue:        #4285f4;
+  --blue-deep:   #274982;
+  --blue-tint:   #e4ecfd;   /* derived light blue for soft fills */
+  --on-blue:     #ffffff;   /* text colour on blue surfaces */
+
+  /* Semantic feedback (correct/wrong inline + drawer) — kept quiet so they
+     don't fight the blue brand. Not used for CTAs. */
+  --green:       #2ea043;
+  --green-deep:  #1f7a31;
+  --green-tint:  #e6f6ea;
+  --red:         #d73a3a;
+  --red-deep:    #a32424;
+  --red-tint:    #fbe7e7;
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --pill:      999px;
+
+  /* SF Pro is the system font on Apple platforms; we fall back to a clean
+     sans on everything else so the type system stays consistent. */
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro",
+               "Inter", "Segoe UI", system-ui, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0; padding: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100dvh;
+}
+
+button { font: inherit; cursor: pointer; }
+a { color: inherit; }
+
+/* ============================================================ */
+/* === TOP BAR ================================================  */
+/* ============================================================ */
+.top-bar {
+  position: sticky; top: 0; z-index: 10;
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 22px;
+  background: var(--bg);
+}
+.back-btn, .close-btn {
+  background: none; border: 0;
+  width: 32px; height: 32px;
+  border-radius: var(--radius-sm);
+  color: var(--ink-soft);
+  font-size: 22px; line-height: 1;
+  transition: color 140ms var(--ease), background-color 140ms var(--ease);
+}
+.close-btn { font-size: 26px; }
+.back-btn:hover, .close-btn:hover { color: var(--ink); background: var(--surface); }
+
+.progress {
+  flex: 1; height: 12px;
+  background: var(--rule);
+  border-radius: var(--pill);
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%; width: 0%;
+  background: var(--blue);
+  border-radius: var(--pill);
+  transition: width 320ms var(--ease);
+}
+
+/* ============================================================ */
+/* === STAGE ==================================================  */
+/* ============================================================ */
+#stage {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 22px 180px;
+}
+.screen { display: none; }
+.screen.is-active {
+  display: block;
+  animation: screen-in 240ms var(--ease);
+}
+@keyframes screen-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.content { padding-top: 28px; }
+.content-center { text-align: center; padding-top: 80px; }
+
+/* Hero card — info + completion screens (lesson-complete, results). Same
+   primary-blue surface as the splash, white text inside. Buttons drop to
+   dark blue so they still read as a discrete CTA on the card. */
+.content-hero {
+  background: var(--blue);
+  color: var(--on-blue);
+  border-radius: var(--radius-xl);
+  padding: 56px 28px 44px;
+  margin-top: 16px;
+}
+.content-hero .title { color: var(--on-blue); }
+.content-hero .btn-primary {
+  background: var(--blue-deep);
+  border-bottom-color: #1a3261;
+}
+.content-hero .btn-ghost {
+  background: transparent;
+  color: var(--on-blue);
+  border-color: rgba(255,255,255,0.45);
+}
+.content-hero .btn-ghost:hover { border-color: var(--on-blue); }
+
+/* ============================================================ */
+/* === TYPE ===================================================  */
+/* ------------------------------------------------------------  */
+/* Title 22px / 700  ·  body 16px / 400  ·  small 13px / 600.    */
+/* No italics. No mid-paragraph color shifts. No underlines.     */
+/* ============================================================ */
+/* Per-screen Title — SF Pro Medium 24 / 32 / near-black on grey.
+   Hero screens (.content-hero, .home-card) override to white. */
+.title {
+  font-size: 24px; font-weight: 500;
+  letter-spacing: -0.012em;
+  line-height: 1.33;
+  margin: 0 0 8px;
+  color: var(--ink);
+}
+.lesson-body {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #555;
+  margin: 0 0 20px;
+}
+/* Quiz question counter label */
+.quiz-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin: 0 0 8px;
+}
+/* Secondary Title — SF Pro Regular 18 / 28. Sits above quiz options. */
+.prompt {
+  font-size: 18px;
+  color: var(--ink);
+  line-height: 1.55;
+  margin: 0 0 20px;
+}
+
+/* ============================================================ */
+/* === BUTTONS ================================================  */
+/* ============================================================ */
+.btn-primary {
+  padding: 14px 26px;
+  background: var(--blue);
+  color: var(--on-blue);
+  border: 0;
+  border-bottom: 3px solid var(--blue-deep);
+  border-radius: var(--radius-md);
+  font-weight: 700; font-size: 14px;
+  letter-spacing: 0.04em; text-transform: uppercase;
+  transition: transform 120ms var(--ease), filter 160ms var(--ease);
+}
+.btn-primary:hover:not(:disabled) { filter: brightness(1.04); }
+.btn-primary:active:not(:disabled) { transform: scale(0.97); }
+.btn-primary:disabled {
+  background: var(--rule); color: var(--ink-soft);
+  border-bottom-color: var(--rule-2);
+  cursor: not-allowed;
+}
+.btn-primary-wide { padding-left: 48px; padding-right: 48px; }
+
+.btn-ghost {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 10px 18px;
+  background: var(--bg);
+  color: var(--ink);
+  border: 1.5px solid var(--rule-2);
+  border-radius: var(--pill);
+  font-weight: 700; font-size: 14px;
+  text-decoration: none;
+  transition: transform 120ms var(--ease), border-color 140ms var(--ease), background-color 140ms var(--ease);
+}
+.btn-ghost:hover { border-color: var(--ink); }
+.btn-ghost:active { transform: scale(0.97); }
+
+/* ============================================================ */
+/* === HOME ===================================================  */
+/* ============================================================ */
+.home-body {
+  min-height: 100dvh;
+  padding: 24px;
+  background: var(--blue);
+}
+.home-stage {
+  width: 100%; max-width: 460px;
+  margin: 0 auto;
+  /* Center vertically only when the viewport is tall enough — otherwise
+     fall back to normal flow so Start is always reachable. */
+  min-height: calc(100dvh - 48px);
+  display: flex; flex-direction: column; justify-content: center;
+}
+/* Splash hero card — sits on full-blue page, no separate card surface. */
+.home-card {
+  text-align: center;
+  padding: 44px 28px 36px;
+  background: transparent;
+  color: var(--on-blue);
+}
+.home-mascot {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  margin: 0 auto 20px;
+  display: block;
+}
+.home-title {
+  font-size: 32px; font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.0625;
+  margin: 0 0 12px;
+  color: var(--on-blue);
+}
+.home-subtitle {
+  font-size: 15px;
+  color: rgba(255,255,255,0.82);
+  margin: 0 0 28px;
+  line-height: 1.5;
+}
+.home-overview-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.55);
+  margin: 0 0 8px;
+  text-align: left;
+  max-width: 260px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.home-steps {
+  list-style: none;
+  margin: 0 auto 32px;
+  padding: 0;
+  max-width: 260px;
+  text-align: left;
+  counter-reset: li;
+  font-size: 16px;
+  color: var(--on-blue);
+}
+.home-steps li {
+  counter-increment: li;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.18);
+}
+.home-steps li:last-child { border-bottom: 0; }
+.home-steps li::before {
+  content: counter(li);
+  display: inline-block;
+  width: 26px;
+  color: rgba(255,255,255,0.62);
+  font-variant-numeric: tabular-nums;
+}
+/* Dark-blue button on the blue hero so the CTA still has its own surface. */
+.home-card .btn-primary {
+  background: var(--blue-deep);
+  border-bottom-color: #1a3261;
+}
+
+/* ============================================================ */
+/* === OVERVIEW LIST (lesson-complete) ========================  */
+/* ============================================================ */
+.overview {
+  list-style: none;
+  margin: 16px auto 0;
+  padding: 0;
+  max-width: 440px;
+  text-align: left;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.overview li {
+  display: flex; gap: 16px; align-items: flex-start;
+  padding: 16px 18px;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-md);
+}
+.overview-num {
+  flex-shrink: 0;
+  width: 28px; height: 28px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--ink); color: #fff;
+  border-radius: 50%;
+  font-weight: 700; font-size: 14px;
+}
+.overview-h {
+  font-weight: 700; font-size: 16px;
+  color: var(--ink);
+}
+.overview-sub {
+  font-size: 14px;
+  color: var(--ink-soft);
+  margin-top: 2px;
+}
+
+/* Overview list inside the lesson-complete hero card. The list still uses
+   white "cards" — they sit on the blue surface and read as nested content. */
+.content-hero .overview li {
+  background: rgba(255,255,255,0.10);
+  border-color: rgba(255,255,255,0.22);
+}
+.content-hero .overview-num {
+  background: var(--on-blue);
+  color: var(--blue-deep);
+}
+.content-hero .overview-h  { color: var(--on-blue); }
+.content-hero .overview-sub { color: rgba(255,255,255,0.78); }
+
+/* ============================================================ */
+/* === TOKENS =================================================  */
+/* ============================================================ */
+.text-input {
+  width: 100%; font: inherit;
+  padding: 12px 16px;
+  border: 1.5px solid var(--rule-2);
+  border-radius: var(--radius-md);
+  background: var(--bg);
+  margin-bottom: 18px;
+  transition: border-color 140ms var(--ease), box-shadow 140ms var(--ease);
+}
+.text-input:focus {
+  outline: none; border-color: var(--ink);
+  box-shadow: 0 0 0 3px rgba(26,26,26,0.08);
+}
+
+.tokens-out {
+  display: flex; flex-wrap: wrap; gap: 5px;
+  min-height: 76px;
+  padding: 14px;
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  margin-bottom: 24px;
+}
+.tok {
+  display: inline-block;
+  padding: 6px 10px;
+  border: 1px solid var(--rule);
+  background: var(--bg);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 15px;
+  color: var(--ink);
+  /* Leading whitespace inside the token is preserved literally — no marker. */
+  white-space: pre;
+  opacity: 0;
+  transform: translateY(4px);
+  /* Fires on every keystroke — keep it fast so it doesn't feel laggy. */
+  animation: tok-in 160ms var(--ease) forwards;
+}
+@keyframes tok-in { to { opacity: 1; transform: translateY(0); } }
+
+.vocab-slider-wrap { margin-bottom: 4px; }
+#vocab-slider {
+  background: linear-gradient(to right, var(--blue) 0%, var(--blue) var(--pct, 0%), var(--rule-2) var(--pct, 0%), var(--rule-2) 100%);
+}
+#vocab-slider::-webkit-slider-thumb {
+  background: var(--blue);
+  border-color: var(--blue);
+}
+#vocab-slider::-moz-range-thumb {
+  background: var(--blue);
+  border-color: var(--blue);
+}
+.vocab-counter {
+  margin-top: 12px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+input[type="range"] {
+  -webkit-appearance: none; appearance: none;
+  width: 100%; height: 4px;
+  background: var(--rule-2);
+  border-radius: var(--pill);
+  outline: none; cursor: pointer;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 2px solid var(--ink);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+  transition: transform 120ms var(--ease);
+}
+input[type="range"]:active::-webkit-slider-thumb { transform: scale(1.1); }
+input[type="range"]::-moz-range-thumb {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: var(--bg); border: 2px solid var(--ink);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+}
+
+/* ============================================================ */
+/* === EMBEDDINGS =============================================  */
+/* ============================================================ */
+.embed-wrap {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-md);
+  margin-bottom: 14px;
+  overflow: hidden;
+}
+.embed-wrap-quiz { background: var(--bg); }
+#embed-svg, #q2-svg { display: block; width: 100%; height: auto; }
+
+.embed-tooltip {
+  position: absolute;
+  background: var(--ink); color: #fff;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  pointer-events: none;
+  transform: translate(-50%, -120%);
+  white-space: nowrap;
+  z-index: 2;
+}
+
+.embed-dot {
+  pointer-events: none;
+  transition: opacity 200ms var(--ease);
+}
+.embed-hit { fill: transparent; cursor: pointer; }
+.embed-label {
+  font-size: 11px;
+  fill: var(--ink-soft);
+  cursor: pointer;
+  user-select: none;
+  transition: opacity 200ms var(--ease), fill 200ms var(--ease);
+}
+.embed-dot.is-faded, .embed-label.is-faded { opacity: 0.16; }
+.embed-dot.is-highlight { r: 7; }
+.embed-label.is-highlight {
+  fill: var(--ink);
+  font-weight: 700;
+  font-size: 12.5px;
+}
+.embed-line {
+  stroke: var(--ink); stroke-opacity: 0.4;
+  stroke-width: 1.2; fill: none;
+  pointer-events: none;
+}
+.embed-arrow {
+  stroke: var(--ink); stroke-width: 2; fill: none;
+  marker-end: url(#arrowhead);
+  opacity: 0.7;
+}
+.embed-target-marker {
+  fill: var(--green); stroke: var(--green-deep); stroke-width: 2;
+}
+
+.embed-controls {
+  display: flex; gap: 8px; flex-wrap: wrap;
+}
+
+/* cluster fills — muted, distinct, but not loud */
+.cluster-royalty   { fill: #8e6cd9; }
+.cluster-animals   { fill: #d98a3a; }
+.cluster-places    { fill: #3a86d9; }
+.cluster-jobs      { fill: #3aa372; }
+.cluster-food      { fill: #d96a3a; }
+.cluster-buildings { fill: #8a7a5f; }
+.cluster-sizes     { fill: #c93a8e; }
+.cluster-emotions  { fill: #c9a93a; }
+.cluster-verbs     { fill: #777; }
+.cluster-time      { fill: #3ac9a9; }
+.cluster-other     { fill: #888; }
+
+/* ============================================================ */
+/* === ATTENTION ==============================================  */
+/* ============================================================ */
+#attn-svg {
+  display: block; width: 100%; height: auto;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-md);
+  margin-bottom: 14px;
+}
+.attn-token-rect {
+  fill: var(--bg); stroke: var(--rule-2); stroke-width: 1.2;
+  transition: fill 200ms var(--ease), stroke 200ms var(--ease);
+}
+.attn-token-rect.is-blank { fill: var(--surface); stroke: var(--ink); }
+.attn-token-rect.is-swap  { fill: var(--ink); stroke: var(--ink); }
+.attn-token-text {
+  font-size: 13px;
+  fill: var(--ink);
+  text-anchor: middle;
+}
+.attn-token-rect.is-swap + .attn-token-text { fill: #fff; }
+.attn-arc {
+  stroke: var(--ink); fill: none; stroke-linecap: round;
+  transition: stroke-width 320ms var(--ease), opacity 200ms var(--ease);
+}
+
+.variant-pills { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+.variant-pill {
+  padding: 8px 16px;
+  background: var(--bg);
+  border: 1.5px solid var(--rule-2);
+  border-radius: var(--pill);
+  color: var(--ink);
+  font-weight: 700; font-size: 14px;
+  transition: transform 120ms var(--ease), background-color 140ms var(--ease), color 140ms var(--ease), border-color 140ms var(--ease);
+}
+.variant-pill:hover { border-color: var(--ink); }
+.variant-pill:active { transform: scale(0.97); }
+.variant-pill.is-selected {
+  background: var(--blue); color: var(--on-blue); border-color: var(--blue);
+}
+
+.attn-top-list {
+  list-style: none; padding: 0; margin: 0;
+  display: flex; flex-wrap: wrap; gap: 6px;
+}
+.attn-top-list li {
+  padding: 7px 14px;
+  background: var(--bg);
+  border: 1px solid var(--rule);
+  border-radius: var(--pill);
+  font-size: 14px;
+  display: inline-flex; align-items: center; gap: 8px;
+  opacity: 0;
+  animation: pop-in 220ms var(--ease) forwards;
+}
+.attn-top-list li .attn-top-pct {
+  color: var(--ink-soft);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+.attn-top-list li.is-leader {
+  background: var(--blue); color: var(--on-blue); border-color: var(--blue);
+}
+.attn-top-list li.is-leader .attn-top-pct { color: rgba(255,255,255,0.78); }
+@keyframes pop-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* ============================================================ */
+/* === DISTRIBUTION ===========================================  */
+/* ============================================================ */
+#dist-svg {
+  display: block; width: 100%; height: auto;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-md);
+  padding: 8px 0;
+  margin-bottom: 14px;
+}
+.dist-bar {
+  fill: var(--ink);
+  transition: width 240ms var(--ease), fill 200ms var(--ease), opacity 240ms var(--ease);
+}
+.dist-bar.is-dead   { fill: var(--rule-2); opacity: 0.5; }
+/* Leader is "highest probability" — a selection, not correctness — so it
+   takes the brand blue (matches the leader pill in the attention beat). */
+.dist-bar.is-leader { fill: var(--blue); }
+.dist-label {
+  font-size: 13px;
+  fill: var(--ink);
+  text-anchor: end;
+}
+.dist-pct {
+  font-size: 12px;
+  fill: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+.dist-cutoff-line {
+  stroke: var(--ink); stroke-width: 1.5;
+  stroke-dasharray: 4 4;
+  opacity: 0.45;
+  transition: y1 220ms var(--ease), y2 220ms var(--ease);
+}
+
+.dist-controls {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
+  margin-bottom: 14px;
+}
+.dial { display: flex; flex-direction: column; gap: 6px; }
+.dial-row {
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-size: 14px; color: var(--ink); font-weight: 600;
+}
+.dial-val {
+  font-size: 14px; font-weight: 700;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.dist-roll-row {
+  display: flex; gap: 14px; align-items: center;
+  background: var(--surface);
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--rule);
+}
+.roll-sentence {
+  flex: 1;
+  font-size: 15px;
+  color: var(--ink);
+  line-height: 1.5;
+}
+.roll-token-fly {
+  display: inline-block;
+  background: var(--blue); color: var(--on-blue);
+  padding: 2px 8px; border-radius: 6px;
+  font-weight: 700;
+  animation: roll-fall 320ms var(--ease);
+}
+@keyframes roll-fall {
+  from { transform: translateY(-14px); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+
+/* ============================================================ */
+/* === LOOP ===================================================  */
+/* ============================================================ */
+.loop-stage {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  margin-bottom: 16px;
+  min-height: 220px;
+  display: flex; flex-direction: column; gap: 18px;
+}
+.loop-sentence {
+  font-size: 17px; line-height: 1.7;
+  display: flex; flex-wrap: wrap; gap: 6px;
+}
+.loop-word {
+  display: inline-block;
+  padding: 5px 10px;
+  background: var(--bg);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
+  /* Preserve any literal leading space (matches token chip behavior). */
+  white-space: pre;
+  opacity: 0;
+  animation: tok-in 200ms var(--ease) forwards;
+}
+.loop-word.is-fresh {
+  background: var(--blue-tint);
+  border-color: var(--blue);
+  animation: loop-pop 320ms var(--ease) forwards;
+}
+@keyframes loop-pop {
+  from { opacity: 0; transform: translateY(-6px) scale(0.95); }
+  60%  { transform: translateY(0) scale(1.02); }
+  to   { opacity: 1; transform: scale(1); }
+}
+.loop-mini-dist {
+  display: flex; flex-direction: column; gap: 4px;
+  min-height: 110px;
+}
+.loop-mini-row {
+  display: grid;
+  grid-template-columns: 140px 1fr 46px;
+  align-items: center; gap: 10px;
+  opacity: 0;
+  animation: mini-row-in 220ms var(--ease) forwards;
+}
+@keyframes mini-row-in { to { opacity: 1; } }
+.loop-mini-word {
+  font-size: 14px;
+  text-align: right;
+  color: var(--ink);
+  white-space: pre;
+}
+.loop-mini-row.is-pick .loop-mini-word {
+  color: var(--blue-deep);
+  font-weight: 700;
+}
+.loop-mini-track {
+  height: 6px;
+  background: var(--bg);
+  border: 1px solid var(--rule);
+  border-radius: var(--pill);
+  overflow: hidden;
+}
+.loop-mini-fill {
+  height: 100%; width: 0%;
+  background: var(--ink);
+  border-radius: var(--pill);
+  transition: width 460ms var(--ease);
+}
+.loop-mini-row.is-pick .loop-mini-fill { background: var(--blue); }
+.loop-mini-pct {
+  font-size: 12px;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+.loop-controls {
+  display: flex; gap: 10px; align-items: center;
+  margin-top: 14px;
+}
+
+/* ============================================================ */
+/* === RANK SLOTS (Q1 + Q3) ===================================  */
+/* ============================================================ */
+.rank-wrap {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 18px;
+  margin-bottom: 14px;
+}
+.rank-slots { display: flex; flex-direction: column; gap: 8px; }
+.rank-slot {
+  display: flex; align-items: center; gap: 12px;
+  min-height: 52px;
+}
+.rank-num {
+  width: 24px; height: 24px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--rule);
+  color: var(--ink-soft);
+  border-radius: 50%;
+  font-weight: 700; font-size: 13px;
+  flex-shrink: 0;
+}
+.rank-drop {
+  flex: 1; min-height: 48px;
+  border: 1.5px dashed var(--rule-2);
+  border-radius: var(--radius-md);
+  background: var(--bg);
+  display: flex; align-items: center; justify-content: center;
+  transition: border-color 140ms var(--ease), background-color 140ms var(--ease);
+}
+.rank-drop.is-over { border-color: var(--ink); background: var(--surface); }
+.rank-drop.has-item { border-style: solid; border-color: var(--rule); }
+
+.rank-bank {
+  display: flex; flex-direction: column; gap: 8px;
+  padding: 14px;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-md);
+  align-self: flex-start;
+}
+.rank-card {
+  padding: 12px 16px;
+  background: var(--bg);
+  border: 1.5px solid var(--rule-2);
+  border-radius: var(--radius-md);
+  font-size: 15px;
+  cursor: grab;
+  user-select: none;
+  text-align: center;
+  transition: transform 120ms var(--ease), border-color 140ms var(--ease);
+}
+.rank-card:hover { border-color: var(--ink); }
+.rank-card:active { cursor: grabbing; transform: scale(0.97); }
+.rank-card.is-dragging { opacity: 0.45; }
+.rank-card.in-slot {
+  background: var(--blue); color: var(--on-blue); border-color: var(--blue);
+}
+.rank-card .rank-count {
+  display: inline-block;
+  margin-left: 8px;
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+.rank-card.in-slot .rank-count { color: rgba(255,255,255,0.78); }
+.rank-card.is-right { border-color: var(--green); }
+.rank-card.is-wrong { border-color: var(--red); }
+
+.q1-controls, .q2-controls, .q3-controls {
+  display: flex; justify-content: center;
+}
+
+@media (max-width: 640px) {
+  .rank-wrap { grid-template-columns: 1fr; }
+}
+
+/* ============================================================ */
+/* === Q-FEEDBACK INLINE ROW ==================================  */
+/* ============================================================ */
+.q-feedback {
+  margin-top: 16px;
+  padding: 16px 18px;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-md);
+  font-size: 15px;
+  line-height: 1.5;
+  display: flex; align-items: center; gap: 14px;
+}
+.q-feedback[hidden] { display: none; }
+.q-feedback.is-correct { background: var(--green-tint); border-color: var(--green); }
+.q-feedback.is-wrong   { background: var(--red-tint);   border-color: var(--red); }
+.q-feedback-body { flex: 1; color: var(--ink); }
+.q-feedback-btn { flex-shrink: 0; }
+
+/* ============================================================ */
+/* === Q2 PROGRESS DOTS =======================================  */
+/* ============================================================ */
+.q2-progress { display: flex; gap: 6px; margin-bottom: 14px; }
+.q2-dot {
+  width: 22px; height: 4px;
+  background: var(--rule);
+  border-radius: var(--pill);
+  transition: background-color 200ms ease;
+}
+.q2-dot.is-active { background: var(--blue); }
+.q2-dot.is-done   { background: var(--blue-deep); }
+
+.q2-anchor-dot { fill: var(--ink); }
+.q2-anchor-label { fill: var(--ink); font-weight: 700; font-size: 13px; }
+.q2-user-marker {
+  fill: var(--ink); stroke: #fff; stroke-width: 3;
+  cursor: grab;
+  transition: opacity 200ms var(--ease);
+}
+.q2-user-marker.is-locked { fill: var(--green); cursor: default; }
+.q2-target-marker {
+  fill: var(--green); stroke: var(--green-deep); stroke-width: 2;
+  opacity: 0;
+  animation: pop-in 320ms var(--ease) forwards;
+}
+
+/* ============================================================ */
+/* === Q3 SUB-PUZZLES =========================================  */
+/* ============================================================ */
+.q3-stage {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-md);
+  padding: 18px;
+  margin-bottom: 14px;
+}
+
+.q3-pick-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+}
+.q3-pick-card {
+  padding: 18px 16px;
+  background: var(--bg);
+  border: 1.5px solid var(--rule-2);
+  border-radius: var(--radius-md);
+  font-size: 16px;
+  text-align: center; cursor: pointer;
+  transition: transform 120ms var(--ease), border-color 140ms var(--ease);
+}
+.q3-pick-card:hover { border-color: var(--ink); }
+.q3-pick-card:active { transform: scale(0.97); }
+.q3-pick-card.is-selected {
+  background: var(--blue); color: var(--on-blue); border-color: var(--blue);
+}
+.q3-pick-card.is-correct {
+  background: var(--green-tint); border-color: var(--green); color: var(--green-deep);
+}
+.q3-pick-card.is-wrong {
+  background: var(--red-tint); border-color: var(--red); color: var(--red-deep);
+}
+
+.q3-temp-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; }
+.q3-temp-line {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 14px;
+  background: var(--bg);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-md);
+}
+.q3-temp-text {
+  flex: 1; font-size: 15px; color: var(--ink);
+}
+.q3-temp-drop {
+  width: 64px; min-height: 44px;
+  border: 1.5px dashed var(--rule-2);
+  border-radius: var(--radius-md);
+  display: flex; align-items: center; justify-content: center;
+  background: var(--bg);
+  transition: border-color 140ms var(--ease), background-color 140ms var(--ease);
+}
+.q3-temp-drop.is-over { border-color: var(--ink); background: var(--surface); }
+.q3-temp-drop.has-item { border-style: solid; border-color: var(--rule); }
+.q3-temp-drop.is-right { border-color: var(--green); background: var(--green-tint); }
+.q3-temp-drop.is-wrong { border-color: var(--red); background: var(--red-tint); }
+
+.q3-temp-bank {
+  display: flex; gap: 10px; padding: 12px;
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  justify-content: center;
+}
+.q3-temp-chip {
+  padding: 9px 16px;
+  background: var(--bg);
+  border: 1.5px solid var(--rule-2);
+  border-radius: var(--pill);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  cursor: grab; user-select: none;
+  transition: transform 120ms var(--ease), border-color 140ms var(--ease);
+}
+.q3-temp-chip:hover { border-color: var(--ink); }
+.q3-temp-chip:active { cursor: grabbing; transform: scale(0.97); }
+.q3-temp-chip.is-dragging { opacity: 0.45; }
+.q3-temp-chip.in-slot {
+  background: var(--blue); color: var(--on-blue); border-color: var(--blue);
+}
+
+/* ============================================================ */
+/* === RESULTS ================================================  */
+/* ============================================================ */
+.results-score {
+  font-size: 72px; font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin: 8px 0 18px;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.results-of {
+  color: var(--ink-soft);
+  font-weight: 700;
+}
+.results-feedback {
+  font-size: 15px;
+  color: #555;
+  line-height: 1.6;
+  max-width: 340px;
+  margin: 6px auto 0;
+}
+.results-breakdown {
+  display: flex; flex-direction: column; gap: 8px;
+  max-width: 360px;
+  margin: 18px auto 0;
+  text-align: left;
+}
+.results-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 18px;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-md);
+  font-size: 15px;
+}
+.results-row.is-correct { background: var(--green-tint); border-color: var(--green); }
+.results-row.is-wrong   { background: var(--red-tint);   border-color: var(--red); }
+.results-label { font-weight: 700; color: var(--ink); }
+.results-status { color: var(--ink-soft); }
+.results-row.is-correct .results-status { color: var(--green-deep); }
+.results-row.is-wrong   .results-status { color: var(--red-deep); }
+
+.results-actions {
+  display: flex; gap: 12px; justify-content: center;
+  margin-top: 24px;
+}
+
+/* Results screen inside the hero card. The score + breakdown rows invert
+   onto the blue surface; correctness tints still win where they apply. */
+.content-hero .results-score { color: var(--on-blue); }
+.content-hero .results-of    { color: rgba(255,255,255,0.7); }
+.content-hero .results-row {
+  background: rgba(255,255,255,0.10);
+  border-color: rgba(255,255,255,0.22);
+}
+.content-hero .results-row .results-label  { color: var(--on-blue); }
+.content-hero .results-row .results-status { color: rgba(255,255,255,0.78); }
+/* Keep the existing correct/wrong tints louder than the hero blue. */
+.content-hero .results-row.is-correct,
+.content-hero .results-row.is-wrong {
+  background: var(--surface);
+}
+.content-hero .results-row.is-correct { border-color: var(--green); }
+.content-hero .results-row.is-wrong   { border-color: var(--red); }
+.content-hero .results-row.is-correct .results-label,
+.content-hero .results-row.is-wrong   .results-label { color: var(--ink); }
+.content-hero .results-row.is-correct .results-status { color: var(--green-deep); }
+.content-hero .results-row.is-wrong   .results-status { color: var(--red-deep); }
+
+/* ============================================================ */
+/* === FOOTER + FEEDBACK BAR ==================================  */
+/* ============================================================ */
+.footer-bar {
+  position: fixed; left: 0; right: 0; bottom: 0;
+  background: var(--bg);
+  border-top: 1px solid var(--rule);
+  padding: 14px 22px;
+  z-index: 5;
+  transition: transform 200ms var(--ease);
+}
+.footer-bar.is-hidden { transform: translateY(100%); }
+.footer-inner {
+  max-width: 720px; margin: 0 auto;
+  display: flex; justify-content: flex-end;
+}
+
+.feedback {
+  position: fixed; left: 0; right: 0; bottom: 0;
+  background: var(--surface);
+  border-top: 1px solid transparent;
+  padding: 16px 22px;
+  z-index: 6;
+  transform: translateY(100%);
+  /* Exit fast (200ms) — the system is responding to the user's choice. */
+  transition: transform 200ms var(--ease);
+}
+/* Enter slow (320ms) — the user needs a beat to read the result. */
+.feedback[data-state="correct"],
+.feedback[data-state="incorrect"] { transition: transform 320ms var(--ease); }
+.feedback[data-state="correct"]   { transform: translateY(0); background: var(--green-tint); border-top-color: var(--green); }
+.feedback[data-state="incorrect"] { transform: translateY(0); background: var(--red-tint);   border-top-color: var(--red); }
+.feedback-inner {
+  max-width: 720px; margin: 0 auto;
+  display: flex; align-items: center; gap: 14px;
+}
+.feedback-icon {
+  width: 38px; height: 38px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--bg);
+  border-radius: 50%;
+  font-size: 18px; font-weight: 700;
+}
+.feedback[data-state="correct"]   .feedback-icon { color: var(--green-deep); }
+.feedback[data-state="incorrect"] .feedback-icon { color: var(--red-deep); }
+.feedback-text { flex: 1; }
+.feedback-title { font-weight: 700; font-size: 16px; color: var(--ink); }
+.feedback[data-state="correct"]   .feedback-title { color: var(--green-deep); }
+.feedback[data-state="incorrect"] .feedback-title { color: var(--red-deep); }
+.feedback-sub { font-size: 13px; color: var(--ink-soft); margin-top: 2px; }
+.feedback[data-state="incorrect"] .btn-primary {
+  background: var(--red);
+  border-bottom-color: var(--red-deep);
+}
+
+/* ============================================================ */
+/* === RESPONSIVE / MOTION ====================================  */
+/* ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  /* Per Emil's skill: reduced motion means fewer + gentler animations, not
+     none. Keep opacity/color transitions (they aid comprehension); strip
+     transform-based movement that can cause motion sickness. */
+  *, *::before, *::after {
+    transition-property: opacity, background-color, border-color, color, fill, stroke !important;
+    animation: none !important;
+  }
+  .screen.is-active { animation: none !important; }
+}
+
+@media (max-width: 640px) {
+  .title { font-size: 22px; }
+  .home-title { font-size: 28px; }
+  #stage { padding: 0 16px 180px; }
+  .content-hero { padding: 40px 20px 32px; }
+  .dist-controls { grid-template-columns: 1fr; }
+  .q3-pick-grid { grid-template-columns: 1fr; }
+  .q-feedback { flex-direction: column; align-items: stretch; gap: 10px; }
+}

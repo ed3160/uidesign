@@ -1,0 +1,237 @@
+{
+  "started_at": 1778900248.8473432,
+  "events": [
+    {
+      "kind": "start",
+      "at": 1778900248.8473432,
+      "data": {}
+    },
+    {
+      "kind": "page_enter",
+      "at": 1778900248.970942,
+      "data": {
+        "screen": "tokens",
+        "route": "/learn/1"
+      }
+    },
+    {
+      "kind": "page_enter",
+      "at": 1778900250.116718,
+      "data": {
+        "screen": "embeddings",
+        "route": "/learn/2"
+      }
+    },
+    {
+      "kind": "page_enter",
+      "at": 1778900250.335108,
+      "data": {
+        "screen": "attention",
+        "route": "/learn/3"
+      }
+    },
+    {
+      "kind": "page_enter",
+      "at": 1778900250.592567,
+      "data": {
+        "screen": "distribution",
+        "route": "/learn/4"
+      }
+    },
+    {
+      "kind": "page_enter",
+      "at": 1778900250.823531,
+      "data": {
+        "screen": "loop",
+        "route": "/learn/5"
+      }
+    },
+    {
+      "kind": "page_enter",
+      "at": 1778900251.114285,
+      "data": {
+        "screen": "lesson-complete",
+        "route": "/learn/6"
+      }
+    },
+    {
+      "kind": "page_enter",
+      "at": 1778900251.4420638,
+      "data": {
+        "screen": "q1",
+        "route": "/quiz/1"
+      }
+    },
+    {
+      "kind": "page_enter",
+      "at": 1778900254.6994529,
+      "data": {
+        "screen": "q2",
+        "route": "/quiz/2"
+      }
+    },
+    {
+      "kind": "page_enter",
+      "at": 1778900372.598795,
+      "data": {
+        "screen": "q2",
+        "route": "/quiz/2"
+      }
+    },
+    {
+      "kind": "page_enter",
+      "at": 1778900380.619075,
+      "data": {
+        "screen": "q3",
+        "route": "/quiz/3"
+      }
+    },
+    {
+      "kind": "q3_subpick",
+      "at": 1778900382.904702,
+      "data": {
+        "idx": 0,
+        "kind": "pick",
+        "pick": "caf\u00e9"
+      }
+    },
+    {
+      "kind": "q3_subpick",
+      "at": 1778900393.240365,
+      "data": {
+        "idx": 1,
+        "kind": "rank",
+        "order": [
+          "note",
+          "novel",
+          "prescription",
+          "sandwich"
+        ]
+      }
+    },
+    {
+      "kind": "q3_subpick",
+      "at": 1778900400.83201,
+      "data": {
+        "idx": 2,
+        "kind": "temp",
+        "match": {
+          "door.": 0.1,
+          "letter from her mother.": 0.8,
+          "saxophone case full of moonlight.": 1.5
+        }
+      }
+    },
+    {
+      "kind": "quiz_submit",
+      "at": 1778900401.8464918,
+      "data": {
+        "qid": "q3",
+        "correct": true
+      }
+    },
+    {
+      "kind": "page_enter",
+      "at": 1778900402.9085429,
+      "data": {
+        "screen": "results",
+        "route": "/results"
+      }
+    },
+    {
+      "kind": "page_enter",
+      "at": 1778900444.5666492,
+      "data": {
+        "screen": "results",
+        "route": "/results"
+      }
+    }
+  ],
+  "quiz": {
+    "q3": {
+      "submitted_at": 1778900401.846474,
+      "answer": {
+        "qid": "q3",
+        "answers": [
+          {
+            "pick": "caf\u00e9"
+          },
+          {
+            "order": [
+              "note",
+              "novel",
+              "prescription",
+              "sandwich"
+            ]
+          },
+          {
+            "match": {
+              "door.": 0.1,
+              "letter from her mother.": 0.8,
+              "saxophone case full of moonlight.": 1.5
+            }
+          }
+        ]
+      },
+      "result": {
+        "results": [
+          {
+            "kind": "pick",
+            "ok": true,
+            "your": "caf\u00e9",
+            "answer": "caf\u00e9",
+            "explain": "Coffee usually comes from a place built for it. A typewriter never."
+          },
+          {
+            "kind": "rank",
+            "ok": false,
+            "positions_correct": 1,
+            "your": [
+              "note",
+              "novel",
+              "prescription",
+              "sandwich"
+            ],
+            "answer": [
+              "prescription",
+              "note",
+              "novel",
+              "sandwich"
+            ],
+            "explain": "Doctors prescribe constantly, write notes often, write novels rarely, make sandwiches only as a joke."
+          },
+          {
+            "kind": "temp",
+            "ok": true,
+            "hits": 3,
+            "details": [
+              {
+                "text": "door.",
+                "your": 0.1,
+                "answer": 0.1,
+                "ok": true
+              },
+              {
+                "text": "letter from her mother.",
+                "your": 0.8,
+                "answer": 0.8,
+                "ok": true
+              },
+              {
+                "text": "saxophone case full of moonlight.",
+                "your": 1.5,
+                "answer": 1.5,
+                "ok": true
+              }
+            ],
+            "explain": "Cold temperature picks the most obvious next word. Hot temperature reaches deep into the tail."
+          }
+        ],
+        "correct": true,
+        "sub_correct": 2
+      },
+      "correct": true
+    }
+  },
+  "score": 1
+}

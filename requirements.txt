@@ -1,0 +1,6 @@
+Flask>=3.0
+tiktoken>=0.7
+
+# Only needed if you re-run precompute/build_embeddings.py to regenerate
+# data/embeddings.json. The shipped embeddings.json works without numpy.
+numpy>=1.26

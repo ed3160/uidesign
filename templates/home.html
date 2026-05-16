@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>How LLMs finish your sentence</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+</head>
+<body class="home-body">
+
+<main class="home-stage">
+  <div class="home-card">
+    <img id="home-mascot" src="{{ url_for('static', filename='mascot.png') }}" alt="" class="home-mascot" />
+
+    <h1 class="home-title">How does a machine finish your sentence?</h1>
+    <p class="home-subtitle">A short interactive lesson on how LLMs work.</p>
+
+    <p class="home-overview-label">What you'll cover</p>
+    <ol class="home-steps">
+      <li>Tokens</li>
+      <li>Embeddings</li>
+      <li>Context</li>
+      <li>Distribution</li>
+      <li>The loop</li>
+    </ol>
+
+    <button class="btn-primary btn-primary-wide home-start" id="start-btn">Start your lesson</button>
+  </div>
+</main>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script>
+  // If the browser restores this page from bfcache, reload so the Start
+  // button isn't stuck at "Starting…" from a previous click.
+  window.addEventListener("pageshow", (e) => {
+    if (e.persisted) window.location.reload();
+  });
+
+  $(function () {
+    // Defensive: always reset Start to its idle state on load.
+    $("#start-btn").prop("disabled", false).text("Start your lesson");
+
+    const $mascot = $("#home-mascot");
+    const imgNormal = "{{ url_for('static', filename='mascot.png') }}";
+    const imgHover  = "{{ url_for('static', filename='mascot-hover.png') }}";
+    $("#start-btn")
+      .on("mouseenter", function () { $mascot.attr("src", imgHover); })
+      .on("mouseleave", function () { $mascot.attr("src", imgNormal); });
+
+    $("#start-btn").on("click", function () {
+      const $btn = $(this).prop("disabled", true).text("Starting…");
+      $.ajax({
+        url: "/api/start", method: "POST",
+        contentType: "application/json",
+        data: "{}",
+      }).done(function () {
+        window.location.href = "/learn/1";
+      }).fail(function () {
+        $btn.prop("disabled", false).text("Start");
+        alert("Couldn't start. Check the server is running.");
+      });
+    });
+  });
+</script>
+</body>
+</html>

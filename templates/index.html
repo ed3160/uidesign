@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>How LLMs finish your sentence</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+</head>
+<body>
+
+<header class="top-bar" aria-label="lesson progress">
+  <button class="back-btn" id="back-btn" aria-label="back">&larr;</button>
+  <div class="progress"><div class="progress-fill" id="progress-fill"></div></div>
+  <button class="close-btn" id="close-btn" aria-label="close">&times;</button>
+</header>
+
+<main id="stage">
+
+  <!-- 1 · TOKENS -->
+  <section class="screen" data-screen="tokens">
+    <div class="content">
+      <h2 class="title">A machine reads pieces, not words.</h2>
+      <p class="lesson-body">When you type a sentence, the AI never sees whole words. It breaks text into fragments called tokens, which can be a full word, part of a word, or just punctuation. The word "unbelievable" might become three tokens while "hi" is just one.</p>
+
+      <input type="text" id="token-input" class="text-input"
+             value="The chef who trained in Paris finally opened her own restaurant."
+             maxlength="160" autocomplete="off" />
+
+      <div class="tokens-out" id="tokens-out" aria-live="polite"></div>
+
+      <div class="vocab-slider-wrap">
+        <input type="range" id="vocab-slider" min="0" max="100" value="0" step="1" autocomplete="off" />
+        <div class="vocab-counter" id="vocab-counter">0 tokens</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 · EMBEDDINGS -->
+  <section class="screen" data-screen="embeddings">
+    <div class="content">
+      <h2 class="title">Every token is a place. Similar meanings sit close.</h2>
+      <p class="lesson-body">Each token gets mapped to a point in a space with hundreds of dimensions. Tokens with related meanings end up near each other, so "Paris" and "Tokyo" are neighbors while "banana" is far away. This lets the model treat meaning like geometry.</p>
+
+      <div class="embed-wrap">
+        <svg id="embed-svg" viewBox="0 0 800 540" preserveAspectRatio="xMidYMid meet"></svg>
+        <div class="embed-tooltip" id="embed-tooltip" hidden></div>
+      </div>
+
+      <div class="embed-controls">
+        <button class="btn-ghost" id="analogy-btn">king &minus; man + woman</button>
+        <button class="btn-ghost" id="analogy-btn-2">paris &minus; france + japan</button>
+        <button class="btn-ghost" id="embed-reset">Reset</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 · ATTENTION -->
+  <section class="screen" data-screen="attention">
+    <div class="content">
+      <h2 class="title">To pick the next word, the model looks back.</h2>
+      <p class="lesson-body">Before choosing what comes next, the model scans everything it has already read and weights each word by how relevant it seems. A word like "chef" carries a lot of influence over what follows. This process is called attention, and it runs on every token at every step.</p>
+
+      <svg id="attn-svg" viewBox="0 0 900 320" preserveAspectRatio="xMidYMid meet"></svg>
+
+      <div class="variant-pills" id="variant-pills">
+        <button class="variant-pill is-selected" data-variant="Paris">Paris</button>
+        <button class="variant-pill" data-variant="Tokyo">Tokyo</button>
+        <button class="variant-pill" data-variant="prison">prison</button>
+        <button class="variant-pill" data-variant="space">space</button>
+      </div>
+
+      <ol class="attn-top-list" id="attn-top-list"></ol>
+    </div>
+  </section>
+
+  <!-- 4 · DISTRIBUTION -->
+  <section class="screen" data-screen="distribution">
+    <div class="content">
+      <h2 class="title">The output is a probability over every word.</h2>
+      <p class="lesson-body">The model scores every word in its vocabulary and converts those scores into probabilities. It does not just pick the top word every time. Settings like temperature control how adventurous the final choice is, letting you trade predictability for variety.</p>
+
+      <svg id="dist-svg" viewBox="0 0 780 360" preserveAspectRatio="xMidYMid meet"></svg>
+
+      <div class="dist-controls">
+        <div class="dial">
+          <div class="dial-row"><span>Temperature</span><span class="dial-val" id="temp-val">1.00</span></div>
+          <input type="range" id="dial-temp" min="1" max="200" value="100" step="1" autocomplete="off" />
+        </div>
+        <div class="dial">
+          <div class="dial-row"><span>Top-k</span><span class="dial-val" id="topk-val">15</span></div>
+          <input type="range" id="dial-topk" min="1" max="15" value="15" step="1" autocomplete="off" />
+        </div>
+        <div class="dial">
+          <div class="dial-row"><span>Top-p</span><span class="dial-val" id="topp-val">1.00</span></div>
+          <input type="range" id="dial-topp" min="5" max="100" value="100" step="1" autocomplete="off" />
+        </div>
+      </div>
+
+      <div class="dist-roll-row">
+        <div class="roll-sentence" id="roll-sentence"></div>
+        <button class="btn-primary" id="roll-btn">Roll</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 · LOOP -->
+  <section class="screen" data-screen="loop">
+    <div class="content">
+      <h2 class="title">Pick one. Append. Repeat.</h2>
+      <p class="lesson-body">Once a word is chosen, it joins the input and the whole process runs again from the top. The model reads the growing sequence, picks another word, and the cycle continues until it decides to stop. This loop is how a short prompt becomes a full response.</p>
+
+      <div class="loop-stage">
+        <div class="loop-sentence" id="loop-sentence"></div>
+        <div class="loop-mini-dist" id="loop-mini-dist"></div>
+      </div>
+
+      <div class="loop-controls">
+        <button class="btn-ghost" id="loop-step-btn">Step</button>
+        <button class="btn-primary" id="loop-play-btn">Play</button>
+        <button class="btn-ghost" id="loop-reset-btn">Reset</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 · LESSON COMPLETE -->
+  <section class="screen" data-screen="lesson-complete">
+    <div class="content content-center content-hero">
+      <h2 class="title">Three questions next.</h2>
+      <ol class="overview">
+        <li>
+          <span class="overview-num">1</span>
+          <div class="overview-body">
+            <div class="overview-h">Token cost</div>
+            <div class="overview-sub">Rank five phrases by how many tokens they cost.</div>
+          </div>
+        </li>
+        <li>
+          <span class="overview-num">2</span>
+          <div class="overview-body">
+            <div class="overview-h">Embedding map</div>
+            <div class="overview-sub">Click where three hidden words live.</div>
+          </div>
+        </li>
+        <li>
+          <span class="overview-num">3</span>
+          <div class="overview-body">
+            <div class="overview-h">Next-word prediction</div>
+            <div class="overview-sub">Pick, rank, and match — three small puzzles.</div>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 7 · Q1 — rank by token count -->
+  <section class="screen" data-screen="q1">
+    <div class="content">
+      <p class="quiz-label">Question 1 of 3</p>
+      <h2 class="title">Drag each phrase into its rank. Top = fewest tokens.</h2>
+
+      <div class="rank-wrap">
+        <div class="rank-slots" id="q1-slots"></div>
+        <div class="rank-bank" id="q1-bank"></div>
+      </div>
+
+      <div class="q1-controls">
+        <button class="btn-primary" id="q1-submit" disabled>Submit</button>
+      </div>
+
+      <div class="q-feedback" id="q1-feedback" hidden></div>
+    </div>
+  </section>
+
+  <!-- 8 · Q2 -->
+  <section class="screen" data-screen="q2">
+    <div class="content">
+      <p class="quiz-label">Question 2 of 3</p>
+      <h2 class="title" id="q2-title">Find the word.</h2>
+      <p class="prompt" id="q2-prompt"></p>
+
+      <div class="q2-progress" id="q2-progress"></div>
+
+      <div class="embed-wrap embed-wrap-quiz">
+        <svg id="q2-svg" viewBox="0 0 800 540" preserveAspectRatio="xMidYMid meet"></svg>
+      </div>
+
+      <div class="q2-controls">
+        <button class="btn-primary" id="q2-submit" disabled>Lock in</button>
+      </div>
+
+      <div class="q-feedback" id="q2-feedback" hidden></div>
+    </div>
+  </section>
+
+  <!-- 9 · Q3 — three sub-puzzles -->
+  <section class="screen" data-screen="q3">
+    <div class="content">
+      <p class="quiz-label">Question 3 of 3</p>
+      <h2 class="title" id="q3-title">Predict the next word.</h2>
+      <p class="prompt" id="q3-prompt"></p>
+
+      <div class="q2-progress" id="q3-progress"></div>
+
+      <div class="q3-stage" id="q3-stage"></div>
+
+      <div class="q3-controls">
+        <button class="btn-primary" id="q3-submit" disabled>Lock in</button>
+      </div>
+
+      <div class="q-feedback" id="q3-feedback" hidden></div>
+    </div>
+  </section>
+
+  <!-- 10 · RESULTS -->
+  <section class="screen" data-screen="results">
+    <div class="content content-center content-hero">
+      <div class="results-score">
+        <span id="results-score">0</span><span class="results-of">/3</span>
+      </div>
+      <h2 class="title" id="results-title">Done.</h2>
+      <p class="results-feedback" id="results-feedback"></p>
+      <div class="results-breakdown" id="results-breakdown"></div>
+      <div class="results-actions">
+        <a class="btn-ghost" href="/">Home</a>
+        <button class="btn-primary" id="results-retry">Try again</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- Feedback bar (sticky) -->
+<div class="feedback" id="feedback" data-state="hidden">
+  <div class="feedback-inner">
+    <div class="feedback-icon" id="feedback-icon">&#10003;</div>
+    <div class="feedback-text">
+      <div class="feedback-title" id="feedback-title">Nice.</div>
+      <div class="feedback-sub" id="feedback-sub"></div>
+    </div>
+    <button class="btn-primary" id="feedback-continue">Continue</button>
+  </div>
+</div>
+
+<!-- Default footer continue -->
+<div class="footer-bar" id="footer-bar">
+  <div class="footer-inner">
+    <button class="btn-primary btn-primary-wide" id="continue-btn">Continue</button>
+  </div>
+</div>
+
+<script>
+  window.__BOOT__ = {
+    startScreen: {{ start_screen|tojson }},
+    routeKind:   {{ route_kind|tojson }},
+    routeN:      {{ route_n|tojson }},
+    totalLearn:  {{ total_learn|tojson }},
+    totalQuiz:   {{ total_quiz|tojson }},
+  };
+</script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

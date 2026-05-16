@@ -1,0 +1,648 @@
+{
+  "sentence": {
+    "prefix": [
+      "The",
+      "chef",
+      "who",
+      "trained",
+      "in"
+    ],
+    "suffix": [
+      "finally",
+      "opened",
+      "her",
+      "own"
+    ],
+    "swap_position": 5,
+    "variants": [
+      "Paris",
+      "Tokyo",
+      "prison",
+      "space"
+    ],
+    "default_variant": "Paris",
+    "blank_label": "___"
+  },
+  "attention": {
+    "Paris": {
+      "The": 0.02,
+      "chef": 0.22,
+      "who": 0.04,
+      "trained": 0.1,
+      "in": 0.03,
+      "Paris": 0.2,
+      "finally": 0.04,
+      "opened": 0.12,
+      "her": 0.04,
+      "own": 0.19
+    },
+    "Tokyo": {
+      "The": 0.02,
+      "chef": 0.21,
+      "who": 0.04,
+      "trained": 0.1,
+      "in": 0.03,
+      "Tokyo": 0.21,
+      "finally": 0.04,
+      "opened": 0.12,
+      "her": 0.04,
+      "own": 0.19
+    },
+    "prison": {
+      "The": 0.02,
+      "chef": 0.17,
+      "who": 0.03,
+      "trained": 0.08,
+      "in": 0.03,
+      "prison": 0.3,
+      "finally": 0.05,
+      "opened": 0.1,
+      "her": 0.04,
+      "own": 0.18
+    },
+    "space": {
+      "The": 0.02,
+      "chef": 0.13,
+      "who": 0.03,
+      "trained": 0.08,
+      "in": 0.03,
+      "space": 0.35,
+      "finally": 0.06,
+      "opened": 0.1,
+      "her": 0.04,
+      "own": 0.16
+    }
+  },
+  "distributions": {
+    "Paris": [
+      [
+        "restaurant",
+        0.3
+      ],
+      [
+        "bistro",
+        0.18
+      ],
+      [
+        "bakery",
+        0.1
+      ],
+      [
+        "caf\u00e9",
+        0.1
+      ],
+      [
+        "patisserie",
+        0.07
+      ],
+      [
+        "shop",
+        0.05
+      ],
+      [
+        "food truck",
+        0.04
+      ],
+      [
+        "catering",
+        0.03
+      ],
+      [
+        "place",
+        0.025
+      ],
+      [
+        "business",
+        0.022
+      ],
+      [
+        "studio",
+        0.018
+      ],
+      [
+        "pop-up",
+        0.015
+      ],
+      [
+        "gallery",
+        0.01
+      ],
+      [
+        "cookbook",
+        0.008
+      ],
+      [
+        "tv show",
+        0.005
+      ]
+    ],
+    "Tokyo": [
+      [
+        "restaurant",
+        0.24
+      ],
+      [
+        "sushi bar",
+        0.17
+      ],
+      [
+        "izakaya",
+        0.12
+      ],
+      [
+        "ramen shop",
+        0.1
+      ],
+      [
+        "noodle bar",
+        0.07
+      ],
+      [
+        "bakery",
+        0.06
+      ],
+      [
+        "caf\u00e9",
+        0.05
+      ],
+      [
+        "shop",
+        0.05
+      ],
+      [
+        "kitchen",
+        0.04
+      ],
+      [
+        "food truck",
+        0.03
+      ],
+      [
+        "catering",
+        0.025
+      ],
+      [
+        "business",
+        0.02
+      ],
+      [
+        "studio",
+        0.015
+      ],
+      [
+        "chain",
+        0.01
+      ],
+      [
+        "pop-up",
+        0.005
+      ]
+    ],
+    "prison": [
+      [
+        "food truck",
+        0.22
+      ],
+      [
+        "restaurant",
+        0.2
+      ],
+      [
+        "catering",
+        0.13
+      ],
+      [
+        "kitchen",
+        0.1
+      ],
+      [
+        "diner",
+        0.08
+      ],
+      [
+        "bakery",
+        0.06
+      ],
+      [
+        "caf\u00e9",
+        0.04
+      ],
+      [
+        "shop",
+        0.04
+      ],
+      [
+        "pop-up",
+        0.04
+      ],
+      [
+        "business",
+        0.035
+      ],
+      [
+        "studio",
+        0.02
+      ],
+      [
+        "place",
+        0.015
+      ],
+      [
+        "soup kitchen",
+        0.015
+      ],
+      [
+        "bar",
+        0.01
+      ],
+      [
+        "chain",
+        0.005
+      ]
+    ],
+    "space": [
+      [
+        "restaurant",
+        0.18
+      ],
+      [
+        "space station",
+        0.12
+      ],
+      [
+        "cafeteria",
+        0.11
+      ],
+      [
+        "food line",
+        0.09
+      ],
+      [
+        "business",
+        0.08
+      ],
+      [
+        "ship",
+        0.07
+      ],
+      [
+        "kitchen",
+        0.06
+      ],
+      [
+        "bakery",
+        0.05
+      ],
+      [
+        "chain",
+        0.05
+      ],
+      [
+        "enterprise",
+        0.04
+      ],
+      [
+        "lab",
+        0.04
+      ],
+      [
+        "agency",
+        0.035
+      ],
+      [
+        "consultancy",
+        0.03
+      ],
+      [
+        "academy",
+        0.025
+      ],
+      [
+        "franchise",
+        0.02
+      ]
+    ]
+  },
+  "loop": [
+    {
+      "pick": ",",
+      "options": [
+        [
+          ",",
+          0.28
+        ],
+        [
+          " in",
+          0.16
+        ],
+        [
+          " that",
+          0.12
+        ],
+        [
+          " serving",
+          0.1
+        ],
+        [
+          " with",
+          0.07
+        ],
+        [
+          " near",
+          0.05
+        ],
+        [
+          " specializing",
+          0.04
+        ],
+        [
+          " featuring",
+          0.03
+        ]
+      ]
+    },
+    {
+      "pick": " serving",
+      "options": [
+        [
+          " serving",
+          0.22
+        ],
+        [
+          " a",
+          0.18
+        ],
+        [
+          " which",
+          0.12
+        ],
+        [
+          " and",
+          0.1
+        ],
+        [
+          " specializing",
+          0.08
+        ],
+        [
+          " featuring",
+          0.06
+        ],
+        [
+          " offering",
+          0.05
+        ],
+        [
+          " inspired",
+          0.04
+        ]
+      ]
+    },
+    {
+      "pick": " rustic",
+      "options": [
+        [
+          " rustic",
+          0.13
+        ],
+        [
+          " classic",
+          0.12
+        ],
+        [
+          " traditional",
+          0.11
+        ],
+        [
+          " modern",
+          0.1
+        ],
+        [
+          " authentic",
+          0.1
+        ],
+        [
+          " homemade",
+          0.08
+        ],
+        [
+          " upscale",
+          0.06
+        ],
+        [
+          " seasonal",
+          0.05
+        ]
+      ]
+    },
+    {
+      "pick": " French",
+      "options": [
+        [
+          " French",
+          0.45
+        ],
+        [
+          " Italian",
+          0.1
+        ],
+        [
+          " Mediterranean",
+          0.08
+        ],
+        [
+          " Proven\u00e7al",
+          0.07
+        ],
+        [
+          " country",
+          0.06
+        ],
+        [
+          " European",
+          0.05
+        ],
+        [
+          " peasant",
+          0.04
+        ],
+        [
+          " Spanish",
+          0.03
+        ]
+      ]
+    },
+    {
+      "pick": " cuisine",
+      "options": [
+        [
+          " cuisine",
+          0.24
+        ],
+        [
+          " dishes",
+          0.2
+        ],
+        [
+          " food",
+          0.15
+        ],
+        [
+          " classics",
+          0.1
+        ],
+        [
+          " fare",
+          0.08
+        ],
+        [
+          " specialties",
+          0.06
+        ],
+        [
+          " recipes",
+          0.04
+        ],
+        [
+          " plates",
+          0.03
+        ]
+      ]
+    },
+    {
+      "pick": ".",
+      "options": [
+        [
+          ".",
+          0.4
+        ],
+        [
+          " with",
+          0.15
+        ],
+        [
+          " and",
+          0.1
+        ],
+        [
+          " to",
+          0.08
+        ],
+        [
+          " in",
+          0.07
+        ],
+        [
+          " alongside",
+          0.04
+        ],
+        [
+          " using",
+          0.04
+        ],
+        [
+          " served",
+          0.03
+        ]
+      ]
+    }
+  ],
+  "quiz1": {
+    "candidates": [
+      "the",
+      "Tokyo",
+      "unbelievable",
+      "GPT-4o",
+      "antidisestablishmentarianism"
+    ]
+  },
+  "quiz2": {
+    "puzzles": [
+      {
+        "kind": "interpolate",
+        "prompt": "A puppy is a young dog. Click where you'd expect 'puppy' to live, given dog and wolf are visible.",
+        "anchors": [
+          "dog",
+          "wolf"
+        ],
+        "target": "puppy"
+      },
+      {
+        "kind": "extrapolate",
+        "prompt": "Drag the marker so 'enormous' is further along the size axis than 'big'.",
+        "anchors": [
+          "tiny",
+          "big"
+        ],
+        "target": "enormous"
+      },
+      {
+        "kind": "analogy",
+        "prompt": "Solve: Paris is to France as ??? is to Japan. Click where the answer lives.",
+        "anchors": [
+          "paris",
+          "france",
+          "japan"
+        ],
+        "target": "tokyo"
+      }
+    ]
+  },
+  "quiz3": {
+    "puzzles": [
+      {
+        "kind": "pick",
+        "prompt": "I'll grab a coffee from the ___",
+        "candidates": [
+          "caf\u00e9",
+          "vending machine",
+          "coworker",
+          "typewriter"
+        ],
+        "answer": "caf\u00e9",
+        "explain": "Coffee usually comes from a place built for it. A typewriter never."
+      },
+      {
+        "kind": "rank",
+        "prompt": "The doctor wrote a ___",
+        "candidates": [
+          "prescription",
+          "note",
+          "novel",
+          "sandwich"
+        ],
+        "order": [
+          "prescription",
+          "note",
+          "novel",
+          "sandwich"
+        ],
+        "explain": "Doctors prescribe constantly, write notes often, write novels rarely, make sandwiches only as a joke."
+      },
+      {
+        "kind": "temp",
+        "prompt": "She opened the ___",
+        "samples": [
+          {
+            "text": "door.",
+            "temperature": 0.1
+          },
+          {
+            "text": "letter from her mother.",
+            "temperature": 0.8
+          },
+          {
+            "text": "saxophone case full of moonlight.",
+            "temperature": 1.5
+          }
+        ],
+        "temps": [
+          0.1,
+          0.8,
+          1.5
+        ],
+        "explain": "Cold temperature picks the most obvious next word. Hot temperature reaches deep into the tail."
+      }
+    ]
+  }
+}
